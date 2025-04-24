@@ -51,6 +51,7 @@ ecom-microservice/     # Microservices
 ├── order-service/     # Order management
 ├── discovery-server/  # Service registry
 Metamask
+```plaintext
 
 ---
 ## How to Run the Project
