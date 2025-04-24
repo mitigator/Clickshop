@@ -51,3 +51,22 @@ ecom-microservice/     # Microservices
 ├── order-service/     # Order management
 ├── discovery-server/  # Service registry
 Metamask
+
+
+# How to Run the Project
+
+1. **Clone the repository**
+git clone https://github.com/your-username/your-repo-name.git
+
+2. **Run Frontend**
+cd ecom-frontend
+npm install npm run dev
+
+3. **Run Backend**
+Open a new terminal:
+cd ecom-backend
+ mvn clean install
+cd target
+java -jar ecommerce-0.0.1-SNAPSHOT.jar
+
+
