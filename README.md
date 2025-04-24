@@ -6,7 +6,7 @@ A full-stack e-commerce web application built with Angular for the frontend and 
 
 ## Technologies Used
 
-### Frontend – Angular (v10)
+### Frontend – Angular
 - Angular Material – Modern UI components
 - Bootstrap 5 – Responsive layout & styling
 - Tailwind CSS – Utility-first CSS
@@ -50,3 +50,4 @@ ecom-microservice/     # Microservices
 ├── user-service/      # User-related operations
 ├── order-service/     # Order management
 ├── discovery-server/  # Service registry
+Metamask
