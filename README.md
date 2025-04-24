@@ -16,7 +16,6 @@ A **full-stack e-commerce web application** built with **Angular** for the front
 - Web3.js – Blockchain interactions  
 - MetaMask Integration – Web3 wallet connection using `@metamask/detect-provider`  
 - PostCSS – CSS transformation pipeline  
-- jQuery – DOM manipulation (used sparingly)
 
 ### 🔹 Backend – Spring Boot
 - Spring Boot Starter Web – REST API development  
