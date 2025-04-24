@@ -68,7 +68,7 @@ git clone https://github.com/mitigator/Clickshop.git
 ```
 cd ecom-frontend
 npm install
-npm run dev
+npm start
 ```
 
 ### 3. Run Backend
