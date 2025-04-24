@@ -1,75 +1,162 @@
-# E-Commerce Web Application
 
-A full-stack e-commerce web application built with Angular for the frontend and Spring Boot for the backend. Includes MetaMask integration for Web3 capabilities.
+#  E-Commerce Web Application
 
----
-
-## Technologies Used
-
-### Frontend – Angular
-- Angular Material – Modern UI components
-- Bootstrap 5 – Responsive layout & styling
-- Tailwind CSS – Utility-first CSS
-- RxJS – Reactive programming
-- ngx-toastr – Toast notifications
-- Web3.js – Blockchain interactions
-- MetaMask Integration – Detect provider for Web3 wallet connection
-- PostCSS – CSS transformation pipeline
-- JQuery – DOM manipulation
-
-### Backend – Spring Boot
-- Spring Boot Starter Web – REST API development
-- Spring Data JPA – Database ORM
-- Spring Security – Secure endpoints
-- JWT (Java Web Tokens) – Authentication & Authorization
-- MySQL – Relational database
-- Stripe Java SDK – Payment integration
-- JUnit & Spring Boot Test – Backend testing
-
-### Microservices
-- Admin Service
-- Authentication Service
-- User Service
-- Order Service
-- Discovery Server – Service registration and discovery for distributed architecture
+A **full-stack e-commerce web application** built with **Angular** for the frontend and **Spring Boot** for the backend. Includes **MetaMask** integration for Web3 capabilities.
 
 ---
 
-## Web3 Integration
-MetaMask is integrated for decentralized authentication and wallet connectivity using `@metamask/detect-provider` and `web3.js`.
+##  Technologies Used
+
+### 🔹 Frontend – Angular
+- Angular Material – Modern UI components  
+- Bootstrap 5 – Responsive layout & styling  
+- Tailwind CSS – Utility-first CSS  
+- RxJS – Reactive programming  
+- ngx-toastr – Toast notifications  
+- Web3.js – Blockchain interactions  
+- MetaMask Integration – Web3 wallet connection using `@metamask/detect-provider`  
+- PostCSS – CSS transformation pipeline  
+- jQuery – DOM manipulation (used sparingly)
+
+### 🔹 Backend – Spring Boot
+- Spring Boot Starter Web – REST API development  
+- Spring Data JPA – Database ORM  
+- Spring Security – Secure endpoints  
+- JWT (Java Web Tokens) – Authentication & Authorization  
+- MySQL – Relational database  
+- Stripe Java SDK – Payment integration  
+- JUnit & Spring Boot Test – Backend testing  
+
+### 🔹 Microservices Architecture
+- Admin Service – Product, inventory, and admin dashboard  
+- Authentication Service – Login, registration, JWT handling  
+- User Service – Profile, address, user-specific data  
+- Order Service – Orders, checkout, order history  
+- Discovery Server – Service registration & discovery (Eureka)
 
 ---
 
-## Project Structure (High-level)
-```plaintext
+##  Web3 Integration
+
+MetaMask is integrated for decentralized login and wallet connectivity using:
+- `@metamask/detect-provider`
+- `web3.js`
+
+---
+
+##  Project Structure
+
+```
 ecom-frontend/         # Angular Frontend
-ecom-backend/          # Spring Boot Backend
-ecom-microservice/     # Microservices
-├── admin-service/     # Admin microservice
-├── auth-service/      # Authentication microservice
-├── user-service/      # User-related operations
-├── order-service/     # Order management
-├── discovery-server/  # Service registry
-Metamask
-```plaintext
+ecom-backend/          # Monolithic Spring Boot backend (optional)
+ecom-microservice/     # Microservices architecture
+├── admin-service/     # Admin operations
+├── auth-service/      # Authentication
+├── user-service/      # User data management
+├── order-service/     # Order processing
+├── discovery-server/  # Eureka service registry
+```
 
 ---
-## How to Run the Project
 
-1. **Clone the repository**
+##  How to Run the Project
+
+### 1. Clone the Repository
+```
 git clone https://github.com/your-username/your-repo-name.git
+```
 
-2. **Run Frontend**
+### 2. Run Frontend
+```
 cd ecom-frontend
-npm install npm run dev
+npm install
+npm run dev
+```
 
-3. **Run Backend**
-set database url in application.properties file
-Open a new terminal:
+### 3. Run Backend
+Set your database credentials in the `application.properties` file.
+
+Then:
+```
 cd ecom-backend
- mvn clean install
+mvn clean install
 cd target
 java -jar ecommerce-0.0.1-SNAPSHOT.jar
+```
+
+Or, for microservices:
+```
+cd ecom-microservice/[service-name]
+mvn clean install
+cd target
+java -jar [service-name].jar
+```
 
 ---
 
+
+## Payment Integration with MetaMask
+
+Follow the steps below to integrate payment functionality using MetaMask and Hardhat.
+
+### 1. Install and Set Up Hardhat
+
+- **Navigate to your MetaMask project folder:**
+  ```bash
+  cd metamask
+  ```
+
+- **Install Hardhat:**
+  ```bash
+  npm install --save-dev hardhat
+  ```
+
+- **Initialize Hardhat Project:**
+  ```bash
+  npx hardhat
+  ```
+
+- **Start a Local Hardhat Node:**
+  ```bash
+  npx hardhat node
+  ```
+
+- **View Wallet Accounts:**
+  The wallet accounts will be displayed once the node is running.
+
+---
+
+### 2. Install MetaMask Extension
+
+- **Download MetaMask for Chrome:**  
+  [MetaMask Chrome Extension](https://chromewebstore.google.com/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en)
+
+---
+
+### 3. Add Local Network to MetaMask
+
+- **In MetaMask, select the network dropdown (default is “Ethereum Mainnet”):**  
+  Make sure you have enabled “Show test networks” in MetaMask to view the full list.
+
+- **Network Configuration:**
+  - **Network Name:** Hardhat
+  - **New RPC URL:** `http://127.0.0.1:8545/`
+  - **Chain ID:** 31337
+  - **Currency Symbol:** HardhatETH
+
+---
+
+### 4. Import Test Accounts into MetaMask
+
+- **Go to the Accounts Tab in MetaMask (the colorful circle in the top right corner).**
+- **Select the “Import Account” option.**
+- **Paste the private keys from the Hardhat console** into the prompt that appears.
+
+---
+
+You should now have MetaMask configured for your local Hardhat network and be ready for payment integration in your application!
+
+
+##  Contact
+
+For questions or support, reach out via [shubhammishra4621@gmail.com] or raise an issue on the repository.
