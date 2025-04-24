@@ -61,7 +61,7 @@ ecom-microservice/     # Microservices architecture
 
 ### 1. Clone the Repository
 ```
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/your-username/your-repo-name.git](https://github.com/mitigator/Clickshop.git
 ```
 
 ### 2. Run Frontend
