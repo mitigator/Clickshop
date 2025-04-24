@@ -92,6 +92,30 @@ java -jar [service-name].jar
 
 ---
 
+##Database 
+
+1. Create a Database
+ ```bash
+  CREATE DATABASE ecommerce_db;
+  ```
+2. Configure application.properties
+```plaintext
+# Database Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/ecommerce_db?useSSL=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# JPA / Hibernate Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+```
+3. No Manual Table Creation Required
+With JPA's entity mapping and the hibernate.ddl-auto=update setting, tables will be automatically created based on your Java entity classes when the application starts up. No need to manually create tables or write SQL DDL scripts.
+
+
 
 ## Payment Integration with MetaMask
 
