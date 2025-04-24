@@ -23,7 +23,6 @@ A **full-stack e-commerce web application** built with **Angular** for the front
 - Spring Security – Secure endpoints  
 - JWT (Java Web Tokens) – Authentication & Authorization  
 - MySQL – Relational database  
-- Stripe Java SDK – Payment integration  
 - JUnit & Spring Boot Test – Backend testing  
 
 ### 🔹 Microservices Architecture
