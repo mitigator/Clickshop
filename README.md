@@ -115,7 +115,7 @@ spring.jpa.properties.hibernate.format_sql=true
 3. No Manual Table Creation Required
 With JPA's entity mapping and the hibernate.ddl-auto=update setting, tables will be automatically created based on your Java entity classes when the application starts up. No need to manually create tables or write SQL DDL scripts.
 
-```
+---
 
 ## Payment Integration with MetaMask
 
