@@ -1,6 +1,6 @@
 package com.ecom.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -23,14 +23,15 @@ import java.util.Set;
 @Service
 public class JwtService implements UserDetailsService {
 
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+    private final UserDao userDao;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private UserDao userDao;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    public JwtService(JwtUtil jwtUtil, UserDao userDao, @Lazy AuthenticationManager authenticationManager) {
+        this.jwtUtil = jwtUtil;
+        this.userDao = userDao;
+        this.authenticationManager = authenticationManager;
+    }
 
     public JwtResponse createJwtToken(JwtRequest jwtRequest) throws Exception {
         String userName = jwtRequest.getUserName();
@@ -46,20 +47,17 @@ public class JwtService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findById(username).get();
+        User user = userDao.findById(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
-        if (user != null) {
-            return new org.springframework.security.core.userdetails.User(
-                    user.getUserName(),
-                    user.getUserPassword(),
-                    getAuthority(user)
-            );
-        } else {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getUserName(),
+                user.getUserPassword(),
+                getAuthority(user)
+        );
     }
 
-    private Set getAuthority(User user) {
+    private Set<SimpleGrantedAuthority> getAuthority(User user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRole().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
@@ -69,7 +67,9 @@ public class JwtService implements UserDetailsService {
 
     private void authenticate(String userName, String userPassword) throws Exception {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userName, userPassword));
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(userName, userPassword)
+            );
         } catch (DisabledException e) {
             throw new Exception("USER_DISABLED", e);
         } catch (BadCredentialsException e) {
