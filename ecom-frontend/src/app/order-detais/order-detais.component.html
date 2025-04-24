@@ -1,0 +1,113 @@
+<div class="order-management-container">
+  <div class="header-section">
+    <h2 class="page-title">Order Management</h2>
+    <div class="controls">
+      <button mat-raised-button class="filter-button">
+        <mat-icon>filter_list</mat-icon>
+        Filters
+      </button>
+      <button mat-raised-button class="export-button">
+        <mat-icon>download</mat-icon>
+        Export
+      </button>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" class="orders-table">
+      <!-- Order ID Column -->
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef>ORDER ID</th>
+        <td mat-cell *matCellDef="let element" class="order-id-cell">#{{element.orderId}}</td>
+      </ng-container>
+
+      <!-- Product Name Column -->
+      <ng-container matColumnDef="Product Name">
+        <th mat-header-cell *matHeaderCellDef>PRODUCT</th>
+        <td mat-cell *matCellDef="let element" class="product-cell">
+          <div class="product-info">
+            <span class="product-name">{{element.product.productName}}</span>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Customer Name Column -->
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef>CUSTOMER</th>
+        <td mat-cell *matCellDef="let element" class="customer-cell">
+          {{element.user.userFirstName}}
+        </td>
+      </ng-container>
+
+      <!-- Address Column -->
+      <ng-container matColumnDef="Address">
+        <th mat-header-cell *matHeaderCellDef>ADDRESS</th>
+        <td mat-cell *matCellDef="let element" class="address-cell">
+          <div class="address-truncate">{{element.orderFullOrder}}</div>
+        </td>
+      </ng-container>
+
+      <!-- Contact Column -->
+      <ng-container matColumnDef="Contact No">
+        <th mat-header-cell *matHeaderCellDef>CONTACT</th>
+        <td mat-cell *matCellDef="let element" class="contact-cell">
+          <a href="tel:{{element.orderContactNumber}}" class="contact-link">
+            {{element.orderContactNumber}}
+          </a>
+        </td>
+      </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="Status">
+        <th mat-header-cell *matHeaderCellDef>STATUS</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="status-badge" [ngClass]="getStatusClass(element.orderStatus)">
+            {{element.orderStatus}}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Actions Column (Added new column) -->
+      <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef>ACTIONS</th>
+        <td mat-cell *matCellDef="let element" class="actions-cell">
+          <button mat-icon-button class="action-button view-button" matTooltip="View Details">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button mat-icon-button class="action-button edit-button" matTooltip="Edit Order">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsWithActions"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsWithActions;" 
+          class="order-row" 
+          (mouseenter)="row.hovered = true"
+          (mouseleave)="row.hovered = false"
+          [class.hovered-row]="row.hovered">
+      </tr>
+    </table>
+  </div>
+
+  <div class="pagination-controls">
+    <span class="items-count">Showing 1-10 of 50 orders</span>
+    <div class="pagination-buttons">
+      <button mat-icon-button class="pagination-button">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button class="pagination-button active">
+        1
+      </button>
+      <button mat-icon-button class="pagination-button">
+        2
+      </button>
+      <button mat-icon-button class="pagination-button">
+        3
+      </button>
+      <button mat-icon-button class="pagination-button">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

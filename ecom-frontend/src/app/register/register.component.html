@@ -1,0 +1,116 @@
+<div class="register-container" [ngClass]="{'dark-theme': isDarkTheme}">
+    <div class="summer-pattern-overlay"></div>
+    
+    <div class="register-card-container">
+      <div class="register-card">
+        <div class="register-header">
+          <div class="theme-toggle">
+            <button (click)="toggleTheme()" class="theme-toggle-btn">
+              <i [class]="isDarkTheme ? 'fas fa-sun' : 'fas fa-moon'"></i>
+            </button>
+          </div>
+          <i class="register-icon fas fa-user-plus"></i>
+          <h2>Create Your Account</h2>
+          <p class="register-subtitle">Join Summer Shop today</p>
+        </div>
+        
+        <form #registerForm="ngForm" (ngSubmit)="register(registerForm)" class="register-form">
+          <div class="form-group">
+            <label for="userName">Username</label>
+            <div class="input-group">
+              <span class="input-icon"><i class="fas fa-user"></i></span>
+              <input 
+                type="text"
+                class="form-control" 
+                ngModel 
+                name="userName" 
+                id="userName" 
+                placeholder="Enter username"
+                required
+              >
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="userFirstName">First Name</label>
+            <div class="input-group">
+              <span class="input-icon"><i class="fas fa-signature"></i></span>
+              <input 
+                type="text"
+                class="form-control" 
+                ngModel 
+                name="userFirstName" 
+                id="userFirstName" 
+                placeholder="Enter first name"
+                required
+              >
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="userLastName">Last Name</label>
+            <div class="input-group">
+              <span class="input-icon"><i class="fas fa-signature"></i></span>
+              <input 
+                type="text"
+                class="form-control" 
+                ngModel 
+                name="userLastName" 
+                id="userLastName" 
+                placeholder="Enter last name"
+                required
+              >
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label for="userPassword">Password</label>
+            <div class="input-group">
+              <span class="input-icon"><i class="fas fa-lock"></i></span>
+              <input 
+                [type]="hidePassword ? 'password' : 'text'"
+                class="form-control" 
+                ngModel 
+                name="userPassword" 
+                id="userPassword" 
+                placeholder="Enter password"
+                required
+              >
+              <button 
+                type="button"
+                class="password-toggle"
+                (click)="hidePassword = !hidePassword"
+              >
+                <i [class]="hidePassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              </button>
+            </div>
+            <div class="password-hint">
+              <small>Use 8 or more characters with a mix of letters, numbers & symbols</small>
+            </div>
+          </div>
+  
+          <div class="terms-agreement">
+            <input type="checkbox" id="terms" name="terms" ngModel required>
+            <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
+          </div>
+  
+          <button class="register-button" type="submit" [disabled]="loading">
+            <i class="fas fa-user-plus"></i> 
+            <span *ngIf="!loading">Create Account</span>
+            <span *ngIf="loading">Creating account...</span>
+          </button>
+        </form>
+        
+        <div class="divider">
+          <span>or</span>
+        </div>
+        
+        <div class="login-section">
+          <p>Already have an account?</p>
+          <button class="login-button" type="button" (click)="navigateToLogin()">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

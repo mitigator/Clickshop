@@ -1,0 +1,144 @@
+/* header.component.css */
+/* Light Theme (Default) */
+.header-container {
+    transition: all 0.3s ease;
+  }
+  
+  .main-toolbar {
+    background-color: #40BFBB;
+    color: white;
+    padding: 0 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-toolbar {
+    background-color: #F8F9FA;
+    color: #2D3748;
+    height: 48px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-image {
+    margin-right: 8px;
+  }
+  
+  .brand-name {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }
+  
+  .search-bar {
+    width: 350px;
+    margin: 0 20px;
+  }
+  
+  .search-bar .mat-form-field {
+    width: 100%;
+    font-size: 14px;
+  }
+  
+  .auth-buttons button {
+    margin-left: 8px;
+  }
+  
+  .login-btn {
+    background-color: #FFB347;
+    color: white;
+  }
+  
+  .logout-btn {
+    background-color: #FF7E6B;
+    color: white;
+  }
+  
+  .nav-container {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+  }
+  
+  .nav-button {
+    padding: 0 16px;
+    border-radius: 0;
+    height: 100%;
+    color: #2D3748;
+    transition: background-color 0.2s;
+  }
+  
+  .nav-button:hover {
+    background-color: rgba(64, 191, 187, 0.1);
+  }
+  
+  .nav-button mat-icon {
+    margin-right: 4px;
+  }
+  
+  .theme-toggle {
+    margin-right: 8px;
+  }
+  
+  /* Dark Theme */
+  .dark-theme .main-toolbar {
+    background-color: #2C7A7B;
+    color: #E2E8F0;
+  }
+  
+  .dark-theme .nav-toolbar {
+    background-color: #1A202C;
+    color: #E2E8F0;
+  }
+  
+  .dark-theme .nav-button {
+    color: #E2E8F0;
+  }
+  
+  .dark-theme .nav-button:hover {
+    background-color: rgba(64, 191, 187, 0.2);
+  }
+  
+  .dark-theme .login-btn {
+    background-color: #FFB347;
+    color: #1A202C;
+  }
+  
+  .dark-theme .logout-btn {
+    background-color: #FF9580;
+    color: #1A202C;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 960px) {
+    .search-bar {
+      width: 200px;
+    }
+    
+    .brand-name {
+      font-size: 20px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .search-bar {
+      display: none;
+    }
+    
+    .nav-button span {
+      display: none;
+    }
+    
+    .nav-button mat-icon {
+      margin-right: 0;
+    }
+  }

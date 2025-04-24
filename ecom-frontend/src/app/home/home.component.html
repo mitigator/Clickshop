@@ -1,0 +1,74 @@
+<div class="home-page-wrapper">
+   <div class="home-container">
+     <!-- Hero section -->
+     <div class="hero-section">
+       <div class="hero-content">
+         <h1>Summer Collection</h1>
+         <p>Discover our latest products for the summer season</p>
+         <div class="search-container">
+           <mat-form-field appearance="outline" class="search-input">
+             <mat-label>Search products</mat-label>
+             <input 
+               #searchkeyword
+               (keyup)="searchByKeyword(searchkeyword.value)"
+               matInput 
+               name="searchKey" 
+               id="searchKey" 
+               placeholder="Search by name, category, or description">
+             <mat-icon matSuffix>search</mat-icon>
+           </mat-form-field>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Results count -->
+     <div class="results-info" *ngIf="productDetails.length > 0">
+       <p>Showing {{productDetails.length}} product(s)</p>
+     </div>
+     
+     <!-- Products grid -->
+     <div class="products-grid">
+       <div class="product-card" *ngFor="let p of productDetails">
+         <div class="product-image-container" (click)="showProductDetails(p.productId)">
+           <img class="product-image" [src]="p.productImages[0].url" [alt]="p.productName">
+           <div class="discount-badge" *ngIf="p.productDiscountedPrice < p.productActualPrice">
+             {{calculateDiscount(p.productActualPrice, p.productDiscountedPrice)}}% OFF
+           </div>
+         </div>
+         
+         <div class="product-details">
+           <h3 class="product-name">{{p.productName}}</h3>
+           <p class="product-description">{{p.productDescription}}</p>
+           <div class="product-price">
+             <span class="discounted-price">₹{{p.productDiscountedPrice}}</span>
+             <span class="original-price" *ngIf="p.productDiscountedPrice < p.productActualPrice">₹{{p.productActualPrice}}</span>
+           </div>
+           <button mat-raised-button color="primary" (click)="showProductDetails(p.productId)" class="view-details-btn">
+             <mat-icon>visibility</mat-icon> View Details
+           </button>
+         </div>
+       </div>
+     </div>
+ 
+     <!-- Empty state -->
+     <div class="empty-state" *ngIf="productDetails.length === 0 && !isLoading">
+       <mat-icon>search_off</mat-icon>
+       <h3>No products found</h3>
+       <p>Try a different search term or browse all products</p>
+       <button mat-raised-button color="primary" (click)="resetSearch()">View All Products</button>
+     </div>
+ 
+     <!-- Loading state -->
+     <div class="loading-state" *ngIf="isLoading">
+       <mat-spinner diameter="40"></mat-spinner>
+       <p>Loading products...</p>
+     </div>
+ 
+     <!-- Load more button -->
+     <div class="load-more-container" *ngIf="showLoadButton && !isLoading">
+       <button mat-raised-button color="accent" (click)="loadMoreProduct()">
+         <mat-icon>add</mat-icon> Load More Products
+       </button>
+     </div>
+   </div>
+ </div>

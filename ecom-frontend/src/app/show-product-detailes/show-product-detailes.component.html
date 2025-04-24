@@ -1,0 +1,124 @@
+<div class="product-container" style="background-color: #F8F9FA; min-height: 100vh; padding: 2rem;">
+
+  <!-- Search Section -->
+  <div class="search-section" style="margin-bottom: 2rem; display: flex; justify-content: center;">
+    <mat-form-field appearance="fill" class="w-75" style="background-color: #FFFFFF;">
+      <mat-label style="color: #2D3748;">Search any Product</mat-label>
+      <input 
+        #searchkeyword
+        (keyup)="searchByKeyword(searchkeyword.value)"
+        matInput 
+        name="searchKey" 
+        id="searchKey" 
+        placeholder="Search products..."
+        style="color: #2D3748;"
+      >
+      <mat-icon matSuffix style="color: #40BFBB;">search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <!-- Product Table -->
+  <div *ngIf="showTable" class="product-table-container" style="background-color: #FFFFFF; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); overflow: hidden;">
+    <table mat-table [dataSource]="productDetails" class="mat-elevation-z1" style="width: 100%;">
+      
+      <!-- Id Column -->
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef style="background-color: #40BFBB; color: white; font-weight: 600;"> ID </th>
+        <td mat-cell *matCellDef="let element" style="color: #2D3748; border-bottom: 1px solid #E2E8F0;"> {{element.productId}} </td>
+      </ng-container>
+    
+      <!-- Name Column -->
+      <ng-container matColumnDef="Product Name">
+        <th mat-header-cell *matHeaderCellDef style="background-color: #40BFBB; color: white; font-weight: 600;"> PRODUCT NAME </th>
+        <td mat-cell *matCellDef="let element" style="color: #2D3748; border-bottom: 1px solid #E2E8F0;"> {{element.productName}} </td>
+      </ng-container>
+    
+      <!-- Description Column -->
+      <ng-container matColumnDef="Product Description">
+        <th mat-header-cell *matHeaderCellDef style="background-color: #40BFBB; color: white; font-weight: 600;"> DESCRIPTION </th>
+        <td mat-cell *matCellDef="let element" style="color: #2D3748; border-bottom: 1px solid #E2E8F0;"> 
+          <span class="truncate-text" style="display: inline-block; max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            {{element.productDescription}}
+          </span>
+        </td>
+      </ng-container>
+    
+      <!-- Discounted Price Column -->
+      <ng-container matColumnDef="Product Discounted Price">
+        <th mat-header-cell *matHeaderCellDef style="background-color: #40BFBB; color: white; font-weight: 600;"> DISCOUNTED PRICE </th>
+        <td mat-cell *matCellDef="let element" style="color: #2D3748; font-weight: 500; border-bottom: 1px solid #E2E8F0;"> 
+          <span style="color: #FF7E6B;">{{element.productDiscountedPrice}}</span>
+        </td>
+      </ng-container>
+
+      <!-- Actual Price Column -->
+      <ng-container matColumnDef="Product Actual Price">
+        <th mat-header-cell *matHeaderCellDef style="background-color: #40BFBB; color: white; font-weight: 600;"> ACTUAL PRICE </th>
+        <td mat-cell *matCellDef="let element" style="color: #2D3748; border-bottom: 1px solid #E2E8F0; text-decoration: line-through;"> 
+          {{element.productActualPrice}}
+        </td>
+      </ng-container>
+
+      <!-- Actions Column -->
+      <ng-container matColumnDef="Actions">
+        <th mat-header-cell *matHeaderCellDef style="background-color: #40BFBB; color: white; font-weight: 600;"> ACTIONS </th>
+        <td mat-cell *matCellDef="let element" style="border-bottom: 1px solid #E2E8F0;"> 
+          <button mat-icon-button color="primary" (click)="showImages(element)" matTooltip="View Images" style="color: #40BFBB;">
+            <mat-icon>photo_library</mat-icon>
+          </button>
+
+          <button mat-icon-button color="primary" (click)="editProductDetails(element.productId)" matTooltip="Edit" style="color: #FFB347;">
+            <mat-icon>edit</mat-icon>
+          </button>
+
+          <button mat-icon-button color="warn" (click)="deleteProduct(element.productId)" matTooltip="Delete" style="color: #FF7E6B;">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>     
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+          style="transition: background-color 0.2s;" 
+          [class.hover-row]="true"
+          (mouseenter)="row.hovered = true"
+          (mouseleave)="row.hovered = false"
+          [style.backgroundColor]="row.hovered ? 'rgba(64, 191, 187, 0.1)' : 'transparent'">
+      </tr>
+    </table>
+  </div>
+
+  <!-- Load More Button -->
+  <div class="text-center mt-5" style="padding-bottom: 100px;" *ngIf="showLoadMoreProductButton">
+    <button type="button" 
+            mat-raised-button 
+            color="primary" 
+            (click)="loadMoreProduct()"
+            style="background-color: #FFB347; color: white; padding: 0.5rem 2rem; border-radius: 24px; font-weight: 500;">
+      Load More Products
+    </button>
+  </div>
+</div>
+
+<!-- Add some global styles to enhance the look -->
+<style>
+  .hover-row {
+    cursor: pointer;
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: white;
+    border-radius: 24px;
+    padding: 0.5em 1em 0.5em 1em;
+    border: 1px solid #E2E8F0;
+  }
+  
+  .mat-form-field-appearance-fill .mat-form-field-underline::before {
+    display: none;
+  }
+  
+  .mat-form-field-appearance-fill.mat-focused .mat-form-field-flex {
+    border-color: #40BFBB;
+    box-shadow: 0 0 0 2px rgba(64, 191, 187, 0.2);
+  }
+</style>

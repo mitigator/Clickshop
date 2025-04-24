@@ -1,0 +1,121 @@
+/* styles.css - Global Styles */
+
+/* Global Theme Variables */
+:root {
+    /* Light Theme */
+    --primary-color: #40BFBB;
+    --primary-light: #6EECEA;
+    --primary-dark: #2A8A86;
+    --secondary-color: #FFB347;
+    --accent-color: #FF7E6B;
+    --background: #F8F9FA;
+    --text-color: #2D3748;
+    --card-bg: #FFFFFF;
+    --border-color: #E2E8F0;
+    
+    /* Font settings */
+    --font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--background);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    min-height: 100vh;
+  }
+  
+  /* Dark Theme */
+  body.dark-theme {
+    --primary-color: #2C7A7B;
+    --primary-light: #40BFBB;
+    --primary-dark: #1D5354;
+    --secondary-color: #FFB347;
+    --accent-color: #FF9580;
+    --background: #1A202C;
+    --text-color: #E2E8F0;
+    --card-bg: #2D3748;
+    --border-color: #4A5568;
+  }
+  
+  /* Summer seasonal elements */
+  .summer-pattern {
+    background-image: url('/api/placeholder/100/100');
+    background-repeat: repeat;
+    opacity: 0.05;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  /* Material Theme Overrides */
+  .mat-button, .mat-raised-button, .mat-icon-button, .mat-stroked-button {
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  
+  .mat-button.primary, .mat-raised-button.primary {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .mat-button.secondary, .mat-raised-button.secondary {
+    background-color: var(--secondary-color);
+    color: white;
+  }
+  
+  .mat-button.accent, .mat-raised-button.accent {
+    background-color: var(--accent-color);
+    color: white;
+  }
+  
+  /* Card styling */
+  .mat-card {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .mat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Form fields */
+  .mat-form-field {
+    width: 100%;
+  }
+  
+  /* Utility classes */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  /* Responsive grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  
+  /* Summer theme animation */
+  @keyframes summerWave {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+  }
+  
+  .summer-element {
+    animation: summerWave 3s ease-in-out infinite;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

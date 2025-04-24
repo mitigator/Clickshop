@@ -1,0 +1,27 @@
+<div class="payment-dialog">
+  <h2 class="dialog-title">Pay with Crypto</h2>
+  
+  <div class="dialog-content">
+    <div *ngIf="!paymentInProgress && !paymentSuccess">
+      <p>Total Amount: {{data.amount}} ETH</p>
+      <button class="primary-button" (click)="processPayment()">
+        Connect Wallet & Pay
+      </button>
+    </div>
+    
+    <div *ngIf="paymentInProgress && !paymentSuccess" class="loading">
+      <div class="spinner"></div>
+      <p>Processing payment...</p>
+    </div>
+    
+    <div *ngIf="paymentSuccess" class="success-message">
+      <span class="icon success-icon">✓</span>
+      <p>Payment successful!</p>
+    </div>
+    
+    <div *ngIf="paymentError" class="error-message">
+      <span class="icon error-icon">⚠</span>
+      <p>{{errorMessage}}</p>
+    </div>
+  </div>
+</div>

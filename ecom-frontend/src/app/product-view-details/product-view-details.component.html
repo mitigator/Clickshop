@@ -1,0 +1,123 @@
+<div class="product-view-wrapper">
+  <div class="product-view-container">
+    <!-- Breadcrumb navigation -->
+    <div class="breadcrumb">
+      <a routerLink="/home">
+        <mat-icon>home</mat-icon>
+        Home
+      </a>
+      <mat-icon>chevron_right</mat-icon>
+      <a routerLink="/products">
+        Products
+      </a>
+      <mat-icon>chevron_right</mat-icon>
+      <span>{{product.productName}}</span>
+    </div>
+
+    <div class="product-details-card">
+      <!-- Product gallery section -->
+      <div class="product-gallery">
+        <div class="main-image-container">
+          <img 
+            [src]="product.productImages[selectProductIndex].url" 
+            class="main-product-image" 
+            alt="{{product.productName}}"
+            (click)="zoomImage()"
+          >
+          <div class="image-nav">
+            <button 
+              mat-icon-button 
+              class="nav-button"
+              (click)="navigateImage(-1)"
+              *ngIf="selectProductIndex > 0"
+            >
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button 
+              mat-icon-button 
+              class="nav-button"
+              (click)="navigateImage(1)"
+              *ngIf="selectProductIndex < product.productImages.length - 1"
+            >
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+          </div>
+        </div>
+
+        <div class="thumbnail-container-wrapper">
+          <div class="thumbnail-gallery">
+            <div 
+              *ngFor="let file of product.productImages; let i = index" 
+              class="thumbnail-container"
+              [class.active]="i === selectProductIndex"
+              (click)="changeIndex(i)"
+            >
+              <img [src]="file.url" class="thumbnail-image" alt="Thumbnail {{i+1}}">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product information section -->
+      <div class="product-info">
+        <div class="product-header">
+          <h1 class="product-title">{{product.productName}}</h1>
+          <div class="product-badges" *ngIf="product.productDiscountedPrice < product.productActualPrice">
+            <div class="discount-badge">
+              {{calculateDiscount(product.productActualPrice, product.productDiscountedPrice)}}% OFF
+            </div>
+          </div>
+        </div>
+
+        <div class="price-container">
+          <span class="current-price">₹{{product.productDiscountedPrice}}</span>
+          <span class="original-price" *ngIf="product.productDiscountedPrice < product.productActualPrice">
+            ₹{{product.productActualPrice}}
+          </span>
+          <span class="saved-amount" *ngIf="product.productDiscountedPrice < product.productActualPrice">
+            You save ₹{{product.productActualPrice - product.productDiscountedPrice}}
+          </span>
+        </div>
+
+        <div class="product-description">
+          <h3>Description</h3>
+          <p>{{product.productDescription}}</p>
+        </div>
+
+        <div class="product-actions">
+          <button 
+            mat-raised-button 
+            class="buy-now-btn"
+            (click)="buyProduct(product.productId)"
+          >
+            <mat-icon>flash_on</mat-icon>
+            Buy Now
+          </button>
+          <button 
+            mat-raised-button 
+            class="add-to-cart-btn"
+            (click)="addToCart(product.productId)"
+          >
+            <mat-icon>add_shopping_cart</mat-icon>
+            Add to Cart
+          </button>
+        </div>
+
+        <div class="additional-info">
+          <div class="info-item">
+            <mat-icon>local_shipping</mat-icon>
+            <span>Free delivery on orders over ₹500</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>assignment_return</mat-icon>
+            <span>30-day return policy</span>
+          </div>
+          <div class="info-item">
+            <mat-icon>verified_user</mat-icon>
+            <span>100% Authentic Products</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

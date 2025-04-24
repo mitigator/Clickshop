@@ -1,0 +1,153 @@
+<div class="order-container">
+  <div class="order-card">
+    <div class="order-header">
+      <h2>Complete Your Order</h2>
+    </div>
+
+    <div class="order-content">
+      <!-- Customer Information Form -->
+      <div class="order-form-section">
+        <form #orderForm="ngForm" (ngSubmit)="placeOrder(orderForm)" class="order-form">
+          <h3>Customer Information</h3>
+          
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" 
+                  [(ngModel)]="orderDetails.fullName"
+                  name="fullName"
+                  #fullName="ngModel"
+                  required>
+            <div *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)" class="error-message">
+              Full name is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="fullAddress">Full Address</label>
+            <textarea id="fullAddress"
+                    [(ngModel)]="orderDetails.fullAddress"
+                    name="fullAddress"
+                    #fullAddress="ngModel"
+                    rows="3"
+                    required></textarea>
+            <div *ngIf="fullAddress.invalid && (fullAddress.dirty || fullAddress.touched)" class="error-message">
+              Address is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contactNumber">Contact Number</label>
+            <input type="tel" id="contactNumber"
+                  [(ngModel)]="orderDetails.contactNumber"
+                  name="contactNumber"
+                  #contactNumber="ngModel"
+                  required>
+            <div *ngIf="contactNumber.invalid && (contactNumber.dirty || contactNumber.touched)" class="error-message">
+              Contact number is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="alternateContactNumber">Alternate Contact Number</label>
+            <input type="tel" id="alternateContactNumber"
+                  [(ngModel)]="orderDetails.alternateContactNumber"
+                  name="alternateContactNumber">
+          </div>
+
+          <div class="payment-options">
+            <h3>Payment Method</h3>
+            
+            <div class="radio-group">
+              <label class="radio-label">
+                <input type="radio" 
+                      name="paymentMethod" 
+                      [(ngModel)]="paymentMethod" 
+                      value="creditCard" 
+                      required>
+                <span class="radio-custom"></span>
+                Credit Card
+              </label>
+              
+              <label class="radio-label">
+                <input type="radio" 
+                      name="paymentMethod" 
+                      [(ngModel)]="paymentMethod" 
+                      value="crypto"
+                      required>
+                <span class="radio-custom"></span>
+                Cryptocurrency (ETH)
+              </label>
+            </div>
+            <div *ngIf="isWalletConnected" class="wallet-info">
+              <p>Connected: {{shortenWalletAddress(walletAddress)}}</p>
+              <p>Balance: {{walletBalance}} ETH</p>
+              <button class="secondary-button" (click)="disconnectWallet()">
+                Disconnect Wallet
+              </button>
+            </div>
+
+            <div *ngIf="paymentMethod === 'crypto'" class="crypto-payment-section">
+              <div *ngIf="!isWalletConnected">
+                <button type="button" class="btn btn-primary" (click)="connectWallet()">
+                  Connect Wallet
+                </button>
+                <p class="wallet-help-text">Please connect your Ethereum wallet to proceed with crypto payment</p>
+              </div>
+              <div *ngIf="isWalletConnected" class="wallet-info">
+                <p><strong>Connected Wallet:</strong> {{shortenWalletAddress(walletAddress)}}</p>
+                <p><strong>Balance:</strong> {{walletBalance}} ETH</p>
+                <p><strong>Amount to Pay:</strong> {{ethAmount | number:'1.4-4'}} ETH (≈ ₹{{getCalculatedGrandTotal()}})</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" [disabled]="isProcessing">
+              {{paymentMethod === 'crypto' ? 'Pay with Crypto' : 'Place Order'}}
+              <span *ngIf="isProcessing" class="spinner"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="order-summary-section">
+        <h3>Order Summary</h3>
+        
+        <div class="order-summary-card">
+          <div class="order-items">
+            <div class="order-item" *ngFor="let product of productDetails">
+              <div class="item-info">
+                <div class="item-name">{{product.productName}}</div>
+                <div class="item-price">₹{{product.productDiscountedPrice}} each</div>
+              </div>
+              
+              <div class="item-quantity">
+                <select [ngModel]="getQuantityForProduct(product.productId)"
+        (ngModelChange)="onQuantityChanged($event, product.productId)"
+        name="quantity">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              
+              <div class="item-total">
+                ₹{{getCalculatedTotal(product.productId, product.productDiscountedPrice)}}
+              </div>
+            </div>
+          </div>
+
+          <div class="order-total">
+            <div class="total-row">
+              <span>Order Total:</span>
+              <span class="total-amount">₹{{getCalculatedGrandTotal()}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

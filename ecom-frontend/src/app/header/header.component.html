@@ -1,0 +1,55 @@
+<!-- header.component.html -->
+<div class="header-container" [ngClass]="{'dark-theme': isDarkTheme}">
+  <mat-toolbar class="main-toolbar">
+    <div class="logo-container">
+      <a href="/" style="text-decoration: none; color: inherit;"><span class="brand-name">ClickShop</span></a>
+    </div>
+    
+    <span class="spacer"></span>
+    
+    <div class="theme-toggle">
+      <button mat-icon-button (click)="toggleTheme()" matTooltip="Toggle theme">
+        <mat-icon>{{ isDarkTheme ? 'wb_sunny' : 'nightlight_round' }}</mat-icon>
+      </button>
+    </div>
+    
+    
+    
+    <div class="auth-buttons">
+      <button *ngIf="!isLoggedIn()" routerLink="/login" mat-raised-button class="login-btn">
+        <mat-icon>login</mat-icon> Login
+      </button>
+      <button *ngIf="isLoggedIn()" (click)="logout()" mat-raised-button class="logout-btn">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-toolbar *ngIf="isLoggedIn()" class="nav-toolbar">
+    <div class="nav-container">
+      <button mat-button routerLink="/" class="nav-button">
+        <mat-icon>home</mat-icon> Home
+      </button>
+      
+      <button *ngIf="!isAdmin()" mat-button routerLink="/cart" class="nav-button">
+        <mat-icon>shopping_cart</mat-icon> Cart
+      </button>
+      
+      <button *ngIf="!isAdmin()" mat-button routerLink="/myOrders" class="nav-button">
+        <mat-icon>receipt_long</mat-icon> My Orders
+      </button>
+      
+      <button *ngIf="isAdmin()" mat-button routerLink="/addNewProduct" class="nav-button">
+        <mat-icon>add_circle</mat-icon> Add Product
+      </button>
+      
+      <button *ngIf="isAdmin()" mat-button routerLink="/showProductDetailes" class="nav-button">
+        <mat-icon>inventory_2</mat-icon> All Products
+      </button>
+      
+      <button *ngIf="isAdmin()" mat-button routerLink="/orderInformation" class="nav-button">
+        <mat-icon>list_alt</mat-icon> Orders
+      </button>
+    </div>
+  </mat-toolbar>
+</div>
