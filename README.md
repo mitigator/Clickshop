@@ -92,7 +92,7 @@ java -jar [service-name].jar
 
 ---
 
-##Database 
+## Database 
 
 1. Create a Database
  ```bash
