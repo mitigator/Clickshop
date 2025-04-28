@@ -1,5 +1,4 @@
-version: '3.8'
-
+# Note: Remove the version line as it's now obsolete
 services:
   mysql:
     image: mysql:8.0
@@ -11,9 +10,16 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - clickshop_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "user", "--password=password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -24,23 +30,36 @@ services:
     ports:
       - "9090:9090"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://clickshop-mysql:3306/clickshop_db
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/clickshop_db
       - SPRING_DATASOURCE_USERNAME=user
       - SPRING_DATASOURCE_PASSWORD=password
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
+    networks:
+      - clickshop_network
 
   frontend:
-    build:
-      context: ./ecom-frontend
-      dockerfile: Dockerfile
+    image: node:20-alpine
     container_name: clickshop-frontend
+    working_dir: /app
     restart: always
     ports:
-      - "3000:80"
+      - "4200:4200"
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+    volumes:
+      - ./ecom-frontend:/app
+    command: sh -c "npm install && npm start -- --host 0.0.0.0"
     depends_on:
       - backend
+    networks:
+      - clickshop_network
 
 volumes:
   mysql_data:
+
+networks:
+  clickshop_network:
+    driver: bridge

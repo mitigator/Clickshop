@@ -1,10 +1,9 @@
-FROM node:20-alpine AS builder
+FROM node:20-alpine
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-RUN npm run build --configuration production
-FROM nginx:stable-alpine
-COPY --from=builder /app/dist/clickshop-frontend /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+ENV NODE_OPTIONS=--openssl-legacy-provider
+EXPOSE 4200
+# Use shell form to ensure proper command execution
+CMD npm start -- --host 0.0.0.0
